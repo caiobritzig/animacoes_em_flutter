@@ -1,7 +1,3 @@
-// screens/planet_detail_screen.dart
-// Tela de DESTINO da Hero Animation
-// Exibe detalhes completos do planeta com animações
-
 import 'package:flutter/material.dart';
 import '../models/planet.dart';
 import '../widgets/planet_card.dart';
@@ -18,11 +14,9 @@ class PlanetDetailScreen extends StatefulWidget {
 
 class _PlanetDetailScreenState extends State<PlanetDetailScreen>
     with TickerProviderStateMixin {
-  // ✅ ANIMAÇÃO EXPLÍCITA: rotação do planeta
   late AnimationController _rotationController;
   late Animation<double> _rotationAnimation;
 
-  // Animação de entrada dos elementos de detalhe
   late AnimationController _entryController;
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
@@ -31,18 +25,16 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen>
   void initState() {
     super.initState();
 
-    // Controller de rotação contínua do planeta
     _rotationController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 8),
-    )..repeat(); // loop infinito
+    )..repeat();
 
     _rotationAnimation = Tween<double>(
       begin: 0.0,
       end: 1.0,
-    ).animate(_rotationController); // sem curve para rotação linear
+    ).animate(_rotationController);
 
-    // Controller de entrada dos detalhes
     _entryController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 600),
@@ -64,7 +56,6 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen>
       curve: const Interval(0.0, 0.8, curve: Curves.easeOutCubic),
     ));
 
-    // Inicia animação de entrada após o Hero terminar (~300ms)
     Future.delayed(const Duration(milliseconds: 300), () {
       if (mounted) _entryController.forward();
     });
@@ -72,7 +63,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen>
 
   @override
   void dispose() {
-    _rotationController.dispose(); // SEMPRE chamar dispose!
+    _rotationController.dispose();
     _entryController.dispose();
     super.dispose();
   }
@@ -85,7 +76,6 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen>
       backgroundColor: const Color(0xFF060B1A),
       body: Stack(
         children: [
-          // Background: CustomPainter de órbitas animado
           AnimatedBuilder(
             animation: _rotationAnimation,
             builder: (context, _) {
@@ -99,12 +89,9 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen>
               );
             },
           ),
-
-          // Conteúdo principal
           SafeArea(
             child: Column(
               children: [
-                // AppBar customizada
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -125,7 +112,7 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen>
                         ),
                       ),
                       const Spacer(),
-                      const SizedBox(width: 48), // balancear o back button
+                      const SizedBox(width: 48),
                     ],
                   ),
                 ),
@@ -137,13 +124,11 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen>
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Hero: emoji do planeta (ORIGEM: PlanetCard)
                         Hero(
                           tag: 'planet-emoji-${widget.planet.id}',
                           child: AnimatedBuilder(
                             animation: _rotationAnimation,
                             builder: (context, child) {
-                              // Rotação suave usando Transform
                               return Transform.scale(
                                 scale: 1.0 +
                                     (0.05 *
@@ -159,7 +144,6 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen>
                             child: Stack(
                               alignment: Alignment.center,
                               children: [
-                                // Anel para Saturno (CustomPainter bônus)
                                 if (widget.planet.id == 'saturn')
                                   SizedBox(
                                     width: 200,
@@ -181,7 +165,6 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen>
                         ),
                         const SizedBox(height: 16),
 
-                        // Hero: nome do planeta (ORIGEM: PlanetCard)
                         Hero(
                           tag: 'planet-name-${widget.planet.id}',
                           child: Material(
@@ -202,7 +185,6 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen>
                   ),
                 ),
 
-                // Seção de detalhes com animação de entrada
                 Expanded(
                   flex: 3,
                   child: SlideTransition(
@@ -236,7 +218,6 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen>
                               ),
                               const SizedBox(height: 20),
 
-                              // Estatísticas com StatBadge (widget reutilizável)
                               Text(
                                 'Dados do Planeta',
                                 style: TextStyle(
@@ -269,7 +250,6 @@ class _PlanetDetailScreenState extends State<PlanetDetailScreen>
                               ),
                               const SizedBox(height: 24),
 
-                              // Botão M3 FilledButton
                               SizedBox(
                                 width: double.infinity,
                                 child: FilledButton.icon(

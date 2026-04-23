@@ -1,16 +1,10 @@
-// widgets/planet_card.dart
-// Widget customizado reutilizável: PlanetCard
-// Recebe parâmetros e é usado em múltiplos lugares
-
 import 'package:flutter/material.dart';
 import '../models/planet.dart';
 
-/// Widget customizado reutilizável para exibir um card de planeta.
-/// Usado na galeria principal e também na tela de detalhes (miniatura).
 class PlanetCard extends StatefulWidget {
   final Planet planet;
   final VoidCallback? onTap;
-  final bool compact; // modo compacto para uso secundário
+  final bool compact;
 
   const PlanetCard({
     super.key,
@@ -32,7 +26,6 @@ class _PlanetCardState extends State<PlanetCard>
   @override
   void initState() {
     super.initState();
-    // Animação explícita: pulso de brilho ao expandir
     _glowController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1200),
@@ -44,7 +37,7 @@ class _PlanetCardState extends State<PlanetCard>
 
   @override
   void dispose() {
-    _glowController.dispose(); // SEMPRE chamar dispose!
+    _glowController.dispose();
     super.dispose();
   }
 
@@ -70,7 +63,6 @@ class _PlanetCardState extends State<PlanetCard>
         animation: _glowAnimation,
         builder: (context, child) {
           return AnimatedContainer(
-            // ✅ ANIMAÇÃO IMPLÍCITA: AnimatedContainer
             duration: const Duration(milliseconds: 350),
             curve: Curves.easeInOutCubic,
             margin: EdgeInsets.symmetric(
@@ -113,7 +105,6 @@ class _PlanetCardState extends State<PlanetCard>
           children: [
             Row(
               children: [
-                // Hero tag única por planeta
                 Hero(
                   tag: 'planet-emoji-${widget.planet.id}',
                   child: Text(
@@ -128,7 +119,6 @@ class _PlanetCardState extends State<PlanetCard>
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Hero na tag do nome também
                       Hero(
                         tag: 'planet-name-${widget.planet.id}',
                         child: Material(
@@ -165,7 +155,6 @@ class _PlanetCardState extends State<PlanetCard>
                   ),
               ],
             ),
-            // Expande com AnimatedOpacity (animação implícita)
             if (!widget.compact) ...[
               AnimatedCrossFade(
                 firstChild: const SizedBox.shrink(),
@@ -213,9 +202,6 @@ class _PlanetCardState extends State<PlanetCard>
   }
 }
 
-/// Widget customizado reutilizável: StatBadge
-/// Exibe um dado estatístico em formato de chip estilizado.
-/// Reutilizado em PlanetCard e na tela de detalhes.
 class StatBadge extends StatelessWidget {
   final String label;
   final Color color;

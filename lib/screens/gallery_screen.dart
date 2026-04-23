@@ -1,7 +1,3 @@
-// screens/gallery_screen.dart
-// Tela principal: Galeria de Planetas
-// ORIGEM das Hero Animations
-
 import 'package:flutter/material.dart';
 import '../models/planet.dart';
 import '../widgets/planet_card.dart';
@@ -17,23 +13,19 @@ class GalleryScreen extends StatefulWidget {
 
 class _GalleryScreenState extends State<GalleryScreen>
     with TickerProviderStateMixin {
-  // ✅ ANIMAÇÃO EXPLÍCITA: rotação do background de órbitas
   late AnimationController _orbitController;
   late Animation<double> _orbitAnimation;
 
-  // Animação explícita: pulso do título
   late AnimationController _titleController;
   late Animation<double> _titleScale;
   late Animation<Color?> _titleColor;
 
-  // Estado para NavigationBar (Material Design 3)
   int _selectedIndex = 0;
 
   @override
   void initState() {
     super.initState();
 
-    // Controller das órbitas (rotação contínua do background)
     _orbitController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 20),
@@ -43,7 +35,6 @@ class _GalleryScreenState extends State<GalleryScreen>
       CurvedAnimation(parent: _orbitController, curve: Curves.linear),
     );
 
-    // Controller do título: pulso de escala + cor
     _titleController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 2000),
@@ -63,7 +54,7 @@ class _GalleryScreenState extends State<GalleryScreen>
 
   @override
   void dispose() {
-    _orbitController.dispose(); // SEMPRE chamar dispose!
+    _orbitController.dispose();
     _titleController.dispose();
     super.dispose();
   }
@@ -76,7 +67,6 @@ class _GalleryScreenState extends State<GalleryScreen>
         transitionDuration: const Duration(milliseconds: 500),
         reverseTransitionDuration: const Duration(milliseconds: 400),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          // Transição com fade sutil para complementar o Hero
           return FadeTransition(
             opacity: CurvedAnimation(
               parent: animation,
@@ -95,7 +85,6 @@ class _GalleryScreenState extends State<GalleryScreen>
       backgroundColor: const Color(0xFF060B1A),
       body: Stack(
         children: [
-          // Background animado: CustomPainter de órbitas (BÔNUS)
           AnimatedBuilder(
             animation: _orbitAnimation,
             builder: (context, _) {
@@ -110,12 +99,10 @@ class _GalleryScreenState extends State<GalleryScreen>
             },
           ),
 
-          // Conteúdo principal
           SafeArea(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Header com título animado
                 Padding(
                   padding: const EdgeInsets.fromLTRB(24, 20, 24, 0),
                   child: Column(
@@ -131,7 +118,6 @@ class _GalleryScreenState extends State<GalleryScreen>
                         ),
                       ),
                       const SizedBox(height: 4),
-                      // ✅ ANIMAÇÃO EXPLÍCITA com AnimatedBuilder
                       AnimatedBuilder(
                         animation: _titleController,
                         builder: (context, child) {
@@ -165,7 +151,6 @@ class _GalleryScreenState extends State<GalleryScreen>
 
                 const SizedBox(height: 16),
 
-                // Lista de planetas com AnimatedOpacity na entrada
                 Expanded(
                   child: ListView.builder(
                     padding: const EdgeInsets.only(bottom: 24),
@@ -173,8 +158,6 @@ class _GalleryScreenState extends State<GalleryScreen>
                     itemBuilder: (context, index) {
                       return _AnimatedListItem(
                         delay: Duration(milliseconds: 100 * index),
-                        // ✅ ANIMAÇÃO IMPLÍCITA: dentro de PlanetCard (AnimatedContainer)
-                        // ✅ HERO ANIMATION: tag definida dentro de PlanetCard
                         child: PlanetCard(
                           planet: planets[index],
                           onTap: () => _navigateToPlanet(planets[index]),
@@ -189,7 +172,6 @@ class _GalleryScreenState extends State<GalleryScreen>
         ],
       ),
 
-      // ✅ MATERIAL DESIGN 3: NavigationBar
       bottomNavigationBar: NavigationBar(
         selectedIndex: _selectedIndex,
         onDestinationSelected: (index) {
@@ -221,8 +203,6 @@ class _GalleryScreenState extends State<GalleryScreen>
   }
 }
 
-/// Widget interno para animar a entrada de cada item da lista
-/// com AnimatedOpacity (animação implícita)
 class _AnimatedListItem extends StatefulWidget {
   final Widget child;
   final Duration delay;
@@ -251,7 +231,6 @@ class _AnimatedListItemState extends State<_AnimatedListItem> {
 
   @override
   Widget build(BuildContext context) {
-    // ✅ ANIMAÇÃO IMPLÍCITA: AnimatedOpacity (fade in dos itens)
     return AnimatedOpacity(
       opacity: _visible ? 1.0 : 0.0,
       duration: const Duration(milliseconds: 400),

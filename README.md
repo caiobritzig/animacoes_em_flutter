@@ -1,17 +1,17 @@
-# 🚀 Galeria Espacial — Animações Flutter
+#  Galeria Espacial — Animações Flutter
 
 **Atividade Prática — Aula 9 | Desenvolvimento para Dispositivos Móveis**  
 Faculdade Senac Joinville | 5ª Fase — 2025/1
 
 ---
 
-## 📱 Sobre o Projeto
+##  Sobre o Projeto
 
 Um aplicativo Flutter com tema de **Galeria do Sistema Solar**, demonstrando diferentes tipos de animações e boas práticas do Flutter com Material Design 3.
 
 ---
 
-## ✅ Requisitos Implementados
+##  Requisitos Implementados
 
 ### 1. Animação Implícita
 - **`AnimatedContainer`** — Cada `PlanetCard` expande/contrai suavemente ao toque, animando `borderRadius`, `padding`, `boxShadow` e gradiente simultaneamente (350ms, `Curves.easeInOutCubic`)
@@ -46,7 +46,7 @@ Um aplicativo Flutter com tema de **Galeria do Sistema Solar**, demonstrando dif
 
 ---
 
-## 🎁 Bônus: CustomPainter
+##  Bônus: CustomPainter
 
 ### `OrbitPainter`
 - Desenha 3 anéis orbitais com `canvas.drawCircle()`
@@ -61,7 +61,7 @@ Um aplicativo Flutter com tema de **Galeria do Sistema Solar**, demonstrando dif
 
 ---
 
-## 📁 Estrutura do Projeto
+##  Estrutura do Projeto
 
 ```
 lib/
@@ -78,7 +78,7 @@ lib/
 
 ---
 
-## ⚡ Como Executar
+##  Como Executar
 
 ```bash
 flutter pub get
@@ -89,7 +89,7 @@ Requisitos: Flutter 3.x ou superior, SDK Dart ≥ 3.0.0
 
 ---
 
-## 🎨 Decisões de Design
+##  Decisões de Design
 
 - **Tema**: Sistema Solar — permite demonstrar animações de forma natural e contextualizada
 - **Paleta**: Fundo escuro `#060B1A` com cores derivadas de cada planeta (tons terrosos, azuis, vermelhos)

@@ -1,13 +1,8 @@
-// widgets/orbit_painter.dart
-// ✅ BÔNUS: CustomPainter desenhando formas geométricas (órbitas e estrelas)
-
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
-/// CustomPainter que desenha um sistema de órbitas animado.
-/// Usado no background da tela principal e na tela de detalhes.
 class OrbitPainter extends CustomPainter {
-  final double animationValue; // 0.0 a 1.0 (rotação)
+  final double animationValue;
   final Color orbitColor;
   final int orbitCount;
 
@@ -22,7 +17,6 @@ class OrbitPainter extends CustomPainter {
     final center = Offset(size.width / 2, size.height / 2);
     final maxRadius = math.min(size.width, size.height) * 0.45;
 
-    // Desenha anéis orbitais
     for (int i = 0; i < orbitCount; i++) {
       final radius = maxRadius * (0.4 + i * 0.3);
       final orbitPaint = Paint()
@@ -30,7 +24,7 @@ class OrbitPainter extends CustomPainter {
         ..style = PaintingStyle.stroke
         ..strokeWidth = 1.0;
 
-      canvas.drawCircle(center, radius, orbitPaint); // drawCircle (obrigatório)
+      canvas.drawCircle(center, radius, orbitPaint);
 
       // Planeta orbitando em cada anel
       final angle = animationValue * 2 * math.pi + (i * math.pi * 2 / 3);
@@ -44,15 +38,13 @@ class OrbitPainter extends CustomPainter {
       canvas.drawCircle(Offset(planetX, planetY), 4.0 - i * 0.5, dotPaint);
     }
 
-    // Estrela central
     _drawStar(canvas, center, 12, 6, orbitColor.withValues(alpha: 0.6));
 
-    // Estrelas pequenas de fundo
     final starPaint = Paint()
       ..color = Colors.white.withValues(alpha: 0.4)
       ..style = PaintingStyle.fill;
 
-    final rand = math.Random(42); // seed fixo para posições consistentes
+    final rand = math.Random(42);
     for (int i = 0; i < 30; i++) {
       final x = rand.nextDouble() * size.width;
       final y = rand.nextDouble() * size.height;
@@ -61,7 +53,6 @@ class OrbitPainter extends CustomPainter {
     }
   }
 
-  /// Desenha uma estrela de N pontas usando drawPath
   void _drawStar(
     Canvas canvas,
     Offset center,
@@ -87,21 +78,19 @@ class OrbitPainter extends CustomPainter {
       }
     }
     path.close();
-    canvas.drawPath(path, paint); // drawPath (obrigatório)
+    canvas.drawPath(path, paint);
   }
 
   @override
   bool shouldRepaint(OrbitPainter oldDelegate) {
-    // Repinta apenas se o valor de animação ou cor mudou
     return oldDelegate.animationValue != animationValue ||
         oldDelegate.orbitColor != orbitColor;
   }
 }
 
-/// CustomPainter para o anel de Saturno na tela de detalhes
 class RingPainter extends CustomPainter {
   final Color color;
-  final double tilt; // inclinação em radianos
+  final double tilt;
 
   const RingPainter({required this.color, this.tilt = 0.3});
 
@@ -118,7 +107,6 @@ class RingPainter extends CustomPainter {
         ..style = PaintingStyle.stroke
         ..strokeWidth = 8.0 - i * 2;
 
-      // drawOval para os anéis de Saturno
       canvas.drawOval(
         Rect.fromCenter(center: center, width: rx, height: ry),
         ringPaint,

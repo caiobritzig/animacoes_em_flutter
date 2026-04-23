@@ -1,7 +1,3 @@
-// main.dart
-// Ponto de entrada do aplicativo
-// ✅ MATERIAL DESIGN 3: useMaterial3: true + ColorScheme.fromSeed()
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'screens/gallery_screen.dart';
@@ -9,7 +5,6 @@ import 'screens/gallery_screen.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Barra de status transparente para imersão total
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
@@ -29,11 +24,10 @@ class GaleriaAnimacoesApp extends StatelessWidget {
       title: 'Galeria Espacial',
       debugShowCheckedModeBanner: false,
 
-      // ✅ MATERIAL DESIGN 3
       theme: ThemeData(
-        useMaterial3: true, // habilitando M3
+        useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF4A90D9), // azul espacial como cor base
+          seedColor: const Color(0xFF4A90D9),
           brightness: Brightness.dark,
         ),
         filledButtonTheme: FilledButtonThemeData(

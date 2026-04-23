@@ -1,14 +1,11 @@
-// models/planet.dart
-// Modelo de dados para cada planeta da galeria
-
 class Planet {
   final String id;
   final String name;
   final String description;
   final String emoji;
-  final int color; // ARGB int
+  final int color;
   final int accentColor;
-  final double size; // tamanho relativo (0.5 - 1.5)
+  final double size;
   final String distance;
   final String moons;
   final String temperature;
@@ -26,8 +23,6 @@ class Planet {
     required this.temperature,
   });
 }
-
-// Lista de planetas do sistema solar
 const List<Planet> planets = [
   Planet(
     id: 'mercury',
